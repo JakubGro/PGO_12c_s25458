@@ -13,10 +13,10 @@ public class Person {
     private ArrayList<Book> wroteBooks = new ArrayList<>();
 
     public Person(String name, String surnameName, LocalDate dateOfBirth, Address address) {
-        this.name = name;
-        this.surnameName = surnameName;
-        this.dateOfBirth = dateOfBirth;
-        this.address = address;
+        this.setName(name);
+        this.setSurnameName(surnameName);
+        this.setAddress(address);
+        this.setDateOfBirth(dateOfBirth);
     }
 
     public Book publishBook(String title, Genre genre, Language lang, LocalDate publishDate) {
@@ -51,6 +51,26 @@ public class Person {
 
     public void setBorrowedBook(Book book){
         this.borrowedBook = book;
+    }
+
+    public void setName(String name) {
+        if(name == null || name.isBlank()){ throw new RuntimeException("Imię jest wymagane"); }
+        this.name = name;
+    }
+
+    public void setSurnameName(String surnameName) {
+        if(surnameName == null || surnameName.isBlank()){ throw new RuntimeException("Nazwisko jest wymagane"); }
+        this.surnameName = surnameName;
+    }
+
+    public void setDateOfBirth(LocalDate dateOfBirth) {
+        if(dateOfBirth == null){ throw new RuntimeException("Data urodzenia jest wymagane"); }
+        this.dateOfBirth = dateOfBirth;
+    }
+
+    public void setAddress(Address address) {
+        if(address == null){ throw new RuntimeException("Adres jest wymagane"); }
+        this.address = address;
     }
 
     public void introduceYourself(){

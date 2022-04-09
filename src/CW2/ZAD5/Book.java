@@ -16,29 +16,19 @@ public class Book {
     private Person borrowedBy;
     private ArrayList<Person> authors;
 
-    public Book(String name, Genre genre, Language lang, LocalDate publishDate, ArrayList<Person> authors) throws Exception {
-        this.validateAuthors(authors);
-
-        this.name = name;
-        this.genre = genre;
-        this.lang = lang;
-        this.authors = authors;
-        this.publishDate = publishDate;
+    public Book(String name, Genre genre, Language lang, LocalDate publishDate, ArrayList<Person> authors){
+        this.setName(name);
+        this.setGenre(genre);
+        this.setLang(lang);
+        this.setAuthors(authors);
+        this.setPublishDate(publishDate);
     }
 
-    public Book(String name, Genre genre, Language lang, ArrayList<Person> authors) throws Exception {
-        this.validateAuthors(authors);
-
-        this.name = name;
-        this.genre = genre;
-        this.lang = lang;
-        this.authors = authors;
-    }
-
-    private void validateAuthors(ArrayList<Person> authors) throws Exception {
-        if(authors == null || authors.size() == 0){
-            throw new Exception("Autor nie został podany");
-        }
+    public Book(String name, Genre genre, Language lang, ArrayList<Person> authors) {
+        this.setName(name);
+        this.setGenre(genre);
+        this.setLang(lang);
+        this.setAuthors(authors);
     }
 
     public void borrowBook(Person person){
@@ -67,12 +57,13 @@ public class Book {
         this.borrowedBy = null;
     }
 
-    public String getName() {
-        return name;
-    }
 
     public int getAge(){
         return LocalDate.now().getYear() - this.publishDate.getYear();
+    }
+
+    public String getName() {
+        return name;
     }
 
     public boolean isAvailable(){
@@ -87,6 +78,30 @@ public class Book {
         }
 
         System.out.println("\nWypozyczona przez: " + (this.borrowedBy==null ? "" : this.borrowedBy.getName() + " " + this.borrowedBy.getSurnameName()));
+    }
+
+    public void setName(String name) {
+        if(name.isBlank()){ throw new RuntimeException("Imię jest wymagane"); }
+        this.name = name;
+    }
+
+    public void setGenre(Genre genre) {
+        if(genre == null){ throw new RuntimeException("Gatunek jest wymagany"); }
+        this.genre = genre;
+    }
+
+    public void setLang(Language lang) {
+        if(lang == null){ throw new RuntimeException("Język jest wymagany"); }
+        this.lang = lang;
+    }
+
+    public void setAuthors(ArrayList<Person> authors) {
+        if(authors == null || authors.isEmpty()){throw new RuntimeException("Autor jest wymagany");}
+        this.authors = authors;
+    }
+
+    public void setPublishDate(LocalDate publishDate) {
+        this.publishDate = publishDate;
     }
 
 }
