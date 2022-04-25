@@ -8,7 +8,7 @@ public class Storage {
     private ArrayList<Product> products = new ArrayList<>();
 
     public Storage(int deliveryTime) {
-        this.deliveryTime = deliveryTime;
+        this.setDeliveryTime(deliveryTime);
     }
 
     public int getDeliveryTime() {

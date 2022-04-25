@@ -1,6 +1,8 @@
 package CW3.ZAD2;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 public class ShoppingCart {
     private static int COUNTER_ID = 0;
@@ -17,11 +19,18 @@ public class ShoppingCart {
 
     public int totalDeliveryTime(){
         int deliveryTime = 0;
+        Set<Storage> uniqueStorages = new HashSet<>();
+
         for (Product product : this.products) {
             if(product.getStorage() != null){
-                deliveryTime += product.getStorage().getDeliveryTime();
+                uniqueStorages.add(product.getStorage());
             }
         }
+
+        for (Storage storage : uniqueStorages) {
+            deliveryTime += storage.getDeliveryTime();
+        }
+
         return deliveryTime;
     }
 

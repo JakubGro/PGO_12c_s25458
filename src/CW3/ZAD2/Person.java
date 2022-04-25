@@ -12,10 +12,10 @@ public class Person {
     private ArrayList<ShoppingCart> historyCarts = new ArrayList<>();
 
     public Person(String name, String surname, double moneyInCash, double moneyOnCard) {
-        this.name = name;
-        this.surname = surname;
-        this.moneyInCash = moneyInCash;
-        this.moneyOnCard = moneyOnCard;
+        this.setName(name);
+        this.setSurname(surname);
+        this.setMoneyInCash(moneyInCash);
+        this.setMoneyOnCard(moneyOnCard);
     }
 
     public String getName() {
@@ -70,10 +70,9 @@ public class Person {
         if (this.moneyOnCard < this.currentCart.totalPrice()){
             throw new RuntimeException("Nie masz wytsarczających srodków na karcie");
         }
-        this.currentCart.sell();
         this.moneyOnCard = this.moneyOnCard - this.currentCart.totalPrice();
+        this.currentCart.sell();
         this.historyCarts.add(this.currentCart);
-
         this.currentCart = null;
     }
 
@@ -81,10 +80,10 @@ public class Person {
         if (this.moneyInCash < this.currentCart.totalPrice()){
             throw new RuntimeException("Nie masz wytsarczających srodków w gotówce");
         }
-        this.currentCart.sell();
         this.moneyInCash = this.moneyInCash - this.currentCart.totalPrice();
+        this.currentCart.sell();
         this.historyCarts.add(this.currentCart);
-
+        this.currentCart = null;
     }
 
     public void addToCart(Product product){
@@ -96,11 +95,11 @@ public class Person {
 
     public void showHistoryCarts(){
         for (ShoppingCart shoppingCart : this.historyCarts) {
-            System.out.println(" ==== Koszyk Id: " + shoppingCart.getId() + ", Total Price: " + shoppingCart.totalPrice() + " ====");
+            System.out.println(" ==== Historyczny Koszyk Id: " + shoppingCart.getId() + ", Total Price: " + shoppingCart.totalPrice() + " ====");
             for (Product product : shoppingCart.getProducts()) {
                 System.out.println(product.getName() + " Price: " + product.getPrice());
             }
-
+            System.out.println();
         }
     }
 
@@ -108,7 +107,7 @@ public class Person {
         if(currentCart == null){
             System.out.println("Brak otwartego koszyka");
         } else {
-            System.out.println(" ==== Otwarty Koszyk Id: " + currentCart.getId() + ", Total Price: " + currentCart.totalPrice() + " ====");
+            System.out.println(" ==== Otwarty Koszyk Id: " + currentCart.getId() + ", Całkowita wartość: " + currentCart.totalPrice() + " Całkowity czas dostawy: "+ this.currentCart.totalDeliveryTime()+" ====");
             for (Product product : this.currentCart.getProducts()) {
                 System.out.println(product.getName() + " Price: " + product.getPrice());
             }
@@ -116,5 +115,10 @@ public class Person {
         }
     }
 
+    public void showBalance(){
+        System.out.println("Gotówka: " + this.moneyInCash);
+        System.out.println("Karta: " + this.moneyOnCard);
+        System.out.println();
+    }
 
 }
