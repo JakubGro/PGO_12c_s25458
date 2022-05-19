@@ -47,6 +47,8 @@ public class Matrix {
     }
 
     public Matrix add(Matrix addMatrix) {
+        Matrix.validateAddOrSubtract(this, addMatrix);
+
         for (int i = 0; i < this.matrix.length; i++) {
             for (int j = 0; j < this.matrix[i].length; j++) {
                 this.matrix[i][j] = this.matrix[i][j] + addMatrix.matrix[i][j];
@@ -56,6 +58,7 @@ public class Matrix {
     }
 
     public static Matrix add(Matrix m1, Matrix m2) {
+        Matrix.validateAddOrSubtract(m1, m2);
         Matrix resultMatrix = new Matrix(m1);
 
         for (int i = 0; i < m1.matrix.length; i++) {
@@ -68,6 +71,7 @@ public class Matrix {
     }
 
     public Matrix subtract(Matrix subMatrix) {
+        Matrix.validateAddOrSubtract(this, subMatrix);
         for (int i = 0; i < this.matrix.length; i++) {
             for (int j = 0; j < this.matrix[i].length; j++) {
                 this.matrix[i][j] = this.matrix[i][j] - subMatrix.matrix[i][j];
@@ -77,6 +81,7 @@ public class Matrix {
     }
 
     public static Matrix subtract(Matrix m1, Matrix m2) {
+        Matrix.validateAddOrSubtract(m1, m2);
         Matrix resultMatrix = new Matrix(m1);
 
         for (int i = 0; i < m1.matrix.length; i++) {
@@ -89,6 +94,7 @@ public class Matrix {
     }
 
     public Matrix multiply(Matrix mulMatrix) {
+        Matrix.validateMultiply(this, mulMatrix);
         int resultMatrix[][] = Matrix.cloneMatrix(this);
 
         for (int i = 0; i < this.matrix.length; i++) {
@@ -104,8 +110,9 @@ public class Matrix {
     }
 
     public static Matrix multiply(Matrix m1, Matrix m2) {
-        Matrix resultMatrix = new Matrix(m1);
+        Matrix.validateMultiply(m1, m2);
 
+        Matrix resultMatrix = new Matrix(m1);
 
         for (int i = 0; i < m1.matrix.length; i++) {
             for (int j = 0; j < m1.matrix[i].length; j++) {
@@ -116,6 +123,18 @@ public class Matrix {
             }
         }
         return resultMatrix;
+    }
+
+    private static void validateAddOrSubtract(Matrix m1, Matrix m2){
+        if(m1.matrix.length != m2.matrix.length || m1.matrix[0].length != m2.matrix[0].length){
+            throw new RuntimeException("Invalid Matrix");
+        }
+    }
+
+    private static void validateMultiply(Matrix m1, Matrix m2){
+        if(m1.matrix.length != m2.matrix[0].length || m1.matrix[0].length != m2.matrix.length){
+            throw new RuntimeException("Invalid Matrix");
+        }
     }
 
 
